@@ -1,5 +1,39 @@
 # Atividade Prática — Arquiteturas de Agentes Inteligentes
 
+## Execução desta implementação no Windows
+
+Os agentes obrigatórios `simple`, `model` e `learning` estão implementados.
+Os agentes opcionais `goal` e `utility` continuam como extensões propostas.
+O agente baseado em modelo usa o mapa observado e rotas que penalizam perigos;
+o agente de aprendizado usa Q-learning tabular, com bateria discretizada e
+consultas à Q-table sem alterações durante a avaliação.
+
+Na pasta do projeto, use o ambiente `.venv-run` preparado para esta cópia:
+
+```powershell
+.\.venv-run\Scripts\python.exe -m tests.check_submission
+.\.venv-run\Scripts\python.exe -m unittest tests.test_student_agents -v
+.\.venv-run\Scripts\python.exe -m src.run_episode --agent model --scenario partial --render
+.\.venv-run\Scripts\python.exe -m src.run_experiments --agents simple model learning --scenarios simple partial risky stochastic --train-episodes 100 --episodes 100 --runs 3 --output results.csv
+.\.venv-run\Scripts\python.exe -m src.plot_results --input results.csv --output-dir plots
+```
+
+Em outro computador, crie primeiro esse ambiente com uma instalação funcional
+do Python: `python -m venv .venv-run`, e instale as dependências com
+`.\.venv-run\Scripts\python.exe -m pip install -r requirements.txt`.
+No PyCharm, selecione `.venv-run\Scripts\python.exe` como interpretador e a raiz
+do projeto como diretório de trabalho. Execute os comandos com `-m` a partir
+dessa raiz para que os imports de `src` funcionem.
+
+O agente `learning` começa sem conhecimento a cada execução do programa;
+o script de experimentos preserva a Q-table entre episódios de uma configuração,
+mas não a salva em disco. Um único episódio não representa uma política treinada.
+Sucesso e qualidade das políticas devem ser avaliados pelos resultados, não
+apenas pela ausência de erros. A observabilidade parcial limita a representação
+tabular usada aqui.
+
+## Enunciado original
+
 Toda a infraestrutura do ambiente, cenários, simulação, métricas e experimentação é fornecida. Você deve implementar apenas o arquivo:
 
 `src/agents/student_agents.py`
